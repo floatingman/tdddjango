@@ -1,2 +1,2 @@
-Django==https://www.djangoproject.com/download/1.7b1/tarball/
+Django==1.6.4
 gunicorn==18.0
