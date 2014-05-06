@@ -1,13 +1,8 @@
-from django.core.urlresolvers import resolve
-from lists.models import Item, List
 from django.test import TestCase
-from django.http import HttpRequest
-from django.template.loader import render_to_string
 from django.utils.html import escape
 
-from lists.views import home_page
 from lists.forms import ItemForm, EMPTY_LIST_ERROR
-
+from lists.models import Item, List
 
 class HomePageTest(TestCase):
 
@@ -59,16 +54,22 @@ class NewListTest(TestCase):
 
 class ListViewTest(TestCase):
 
+    def test_user_list_template(self):
+        list_ = List.objects.create()
+        response = self.client.get('/lists/%d/' % (list_.id,))
+        self.assertTemplateUsed(response, 'list.html')
+
     def test_passes_correct_list_to_template(self):
         other_list = List.objects.create()
         correct_list = List.objects.create()
         response = self.client.get('/lists/%d/' % (correct_list.id,))
         self.assertEqual(response.context['list'], correct_list)
 
-    def test_uses_list_template(self):
+    def test_displays_item_form(self):
         list_ = List.objects.create()
         response = self.client.get('/lists/%d/' % (list_.id,))
-        self.assertTemplateUsed(response, 'list.html')
+        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertContains(response, 'name="text"')
 
     def test_displays_only_items_for_that_list(self):
         correct_list = List.objects.create()
