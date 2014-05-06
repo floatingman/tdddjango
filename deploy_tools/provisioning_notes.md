@@ -4,7 +4,7 @@ Provisioning a new site
 ## Required packages:
 
 * nginx
-* Python
+* Python 3
 * Git
 * pip
 * virtualenv
@@ -28,9 +28,9 @@ eg, on Ubuntu:
 Assume we have a user account at /home/username
 
 /home/username
-	/sites
-		/SITENAME
-			/database
-			/source
-			/static
-			/virtualenv
+/home/username/sites
+/home/username/sites/SITENAME
+/home/username/sites/SITENAME/database
+/home/username/sites/SITENAME/source
+/home/username/sites/SITENAME/static
+/home/username/sites/SITENAME/virtualenv
